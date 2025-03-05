@@ -5,15 +5,15 @@ import { Board } from "./board.js";
 
 const startGame = async () => {
   const board = new Board();
-  board.printRow0();
+  board.print();
 
-  const rl = readline.createInterface({ input, output });
-  const answer = await rl.question(
-    "would you like to play agaisnt a computer? Y/N "
-  );
+  // const rl = readline.createInterface({ input, output });
+  // const answer = await rl.question(
+  //   "would you like to play agaisnt a computer? Y/N     "
+  // );
 
-  console.log(answer);
-  rl.close();
+  // console.log(answer);
+  // rl.close();
 };
 
 startGame();
