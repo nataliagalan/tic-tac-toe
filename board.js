@@ -1,7 +1,7 @@
 const boardValues = new Map();
-boardValues.set(1, "x");
-boardValues.set(2, "x");
-boardValues.set(3, "x");
+boardValues.set(1, " ");
+boardValues.set(2, " ");
+boardValues.set(3, " ");
 
 export class Board {
   constructor() {
