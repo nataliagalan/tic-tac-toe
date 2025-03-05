@@ -1,26 +1,33 @@
+const boardValues = new Map();
+boardValues.set(1, "x");
+boardValues.set(2, "x");
+boardValues.set(3, "x");
+
 export class Board {
-  constructor(row1, row2, row3) {
-    this.row1 = row1;
-    this.row2 = row2;
-    this.row3 = row3;
+  constructor() {
+    this.row1 = boardValues;
+    this.row2 = boardValues;
+    this.row3 = boardValues;
   }
 
-  print() {}
+  print() {
+    this.printHorizontalLabels();
+    this.printRow(this.row1, "a");
+    this.printRow(this.row2, "b");
+    this.printRow(this.row3, "c");
+  }
 
-  printRow0() {
-    console.log("ttttest");
+  printHorizontalLabels() {
+    console.log("  1 2 3");
+  }
+
+  printRow(row, rowLabel) {
+    const emptyArray = [];
+    for (const [key, value] of row) {
+      emptyArray.push(value);
+    }
+
+    const formatedRow = emptyArray.join("|");
+    console.log(`${rowLabel} ${formatedRow} `);
   }
 }
-
-// Draft algorithm to print the board
-// print first line (2 empty spaces and 1, empty space, 2 empty space, 3, empty space, new line)
-// iterate through a
-// print a, then print empty space
-// print the first key-value pair in a
-// then print a pipe |
-// print the second key-value pair in a
-// then print a pipe |
-// print the third key-value pair in a
-// then print a new line
-// iterate through b
-// repeat steps for a, and c
