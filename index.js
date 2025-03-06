@@ -22,6 +22,7 @@ const gameLoop = async (currentPlayer) => {
   const isTieOrWin = board.checkForTieOrWin();
 
   if (isTieOrWin) {
+    board.print();
     rl.close();
     return;
   }

@@ -31,10 +31,11 @@ export class Board {
   }
 
   checkForWin() {
-    return this.checkHorizontalWin();
-    // ||
-    // this.checkVerticalWin() ||
-    // this.checkDiagonalWin()
+    return (
+      this.checkHorizontalWin() ||
+      this.checkVerticalWin() ||
+      this.checkDiagonalWin()
+    );
   }
 
   checkHorizontalWin() {
@@ -52,20 +53,58 @@ export class Board {
     return row.get(1) === row.get(2) && row.get(2) === row.get(3);
   }
 
-  // Draft algorithm to check for win or tie
-  // horizontal win
-  // if a.1 === a.2 && a.3 === a.2
-  // if b.1 === b.2 && b.3 === b.2
-  // if c.1 === c.2 && c.3 === c.2
+  checkVerticalWin() {
+    return this.checkColumn(1) || this.checkColumn(2) || this.checkColumn(3);
+  }
 
-  // vertical win
-  // if a.1 === b.1 && c.1 === b.1
-  // if a.2 === b.2 && c.2 === b.2
-  // if a.3 === b.3 && c.3 === b.3
+  checkColumn(column) {
+    if (
+      this.row1.get(column) === " " ||
+      this.row2.get(column) === " " ||
+      this.row3.get(column) === " "
+    ) {
+      return false;
+    }
 
-  // diagonal win
-  // if a.1 === b.2 && c.3 === b.2
-  // if c.1 === b.2 && a.3 === b.2
+    return (
+      this.row1.get(column) === this.row2.get(column) &&
+      this.row2.get(column) === this.row3.get(column)
+    );
+  }
+
+  checkDiagonalWin() {
+    return this.checkLeftDiagonal() || this.checkRightDiagonal();
+  }
+
+  checkLeftDiagonal() {
+    if (
+      this.row1.get(1) === " " ||
+      this.row2.get(2) === " " ||
+      this.row3.get(3) === " "
+    ) {
+      return false;
+    }
+
+    return (
+      this.row1.get(1) === this.row2.get(2) &&
+      this.row2.get(2) === this.row3.get(3)
+    );
+  }
+
+  checkRightDiagonal() {
+    if (
+      this.row1.get(3) === " " ||
+      this.row2.get(2) === " " ||
+      this.row3.get(1) === " "
+    ) {
+      return false;
+    }
+
+    return (
+      this.row1.get(3) === this.row2.get(2) &&
+      this.row2.get(2) === this.row3.get(1)
+    );
+  }
 
   print() {
     this.printColumnLabels();
