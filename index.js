@@ -3,20 +3,37 @@ import { stdin as input, stdout as output } from "node:process";
 
 import { Board } from "./board.js";
 
-const startGame = async () => {
-  const board = new Board();
+const rl = readline.createInterface({ input, output });
+const board = new Board();
+
+const gameLoop = async (currentPlayer) => {
   board.print();
 
-  const rl = readline.createInterface({ input, output });
-  const row = await rl.question("Enter row for Player 1: (a, b, or c) ");
-  const column = await rl.question("Enter column for Player 1: (1, 2, or 3) ");
+  const row = await rl.question(
+    `Enter row for Player ${currentPlayer}: (a, b, or c) `
+  );
+  const column = await rl.question(
+    `Enter column for Player ${currentPlayer}: (1, 2, or 3) `
+  );
 
   // TODO: replace "x" with player.symbol
-  board.update(row, column, "x");
+  board.update(row, column, currentPlayer);
 
-  board.print();
+  const isTieOrWin = board.checkForTieOrWin();
 
-  rl.close();
+  if (isTieOrWin) {
+    rl.close();
+    return;
+  }
+
+  const nextPlayer = currentPlayer === "x" ? "o" : "x";
+
+  gameLoop(nextPlayer);
+};
+
+const startGame = async () => {
+  console.log("Welcome to Tic Tac Toe!");
+  gameLoop("x");
 };
 
 startGame();
