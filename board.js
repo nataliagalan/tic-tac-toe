@@ -1,3 +1,5 @@
+import chalk from "chalk";
+
 const row1Data = new Map();
 row1Data.set(1, " ");
 row1Data.set(2, " ");
@@ -20,14 +22,32 @@ export class Board {
     this.row3 = row3Data;
   }
 
-  checkForTieOrWin() {
+  checkForTieOrWin(currentPlayer) {
+    const winningMessage = `${chalk.yellow.inverse(
+      `\n🥳 Player: ${currentPlayer} wins! 🥳`
+    )}`;
+
+    const tieMessage = `${chalk.black.inverse("\n🤝 It's a tie! 🤝")}`;
+
     if (this.checkForWin()) {
-      console.log("Player la bla bla wins! 🥳");
+      console.log(winningMessage);
+      return true;
+    } else if (this.checkForTie()) {
+      console.log(tieMessage);
       return true;
     }
-    // else if (this.checkForTie()) {
-    //   console.log("It's a tie!");
-    // }
+    return false;
+  }
+
+  checkForTie() {
+    for (const row of [this.row1, this.row2, this.row3]) {
+      for (let col = 1; col <= 3; col++) {
+        if (row.get(col) === " ") {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   checkForWin() {
@@ -114,7 +134,7 @@ export class Board {
   }
 
   printColumnLabels() {
-    console.log("  1 2 3");
+    console.log("\n  1 2 3");
   }
 
   printRow(row, rowLabel) {
@@ -128,12 +148,39 @@ export class Board {
   }
 
   update(row, column, playerSymbol) {
+    const isSpotTaken = this.checkIfSpotIsTaken(row, column);
+    if (isSpotTaken) {
+      return;
+    }
     if (row === "a") {
       this.row1.set(parseInt(column), playerSymbol);
     } else if (row === "b") {
       this.row2.set(parseInt(column), playerSymbol);
     } else if (row === "c") {
       this.row3.set(parseInt(column), playerSymbol);
+    }
+  }
+
+  checkIfSpotIsTaken(row, column) {
+    const warningMessage = `${chalk.red(
+      "\n📌 Spot is taken, please choose another spot 📌"
+    )}`;
+
+    if (row === "a") {
+      if (this.row1.get(parseInt(column)) !== " ") {
+        console.log(warningMessage);
+        return true;
+      }
+    } else if (row === "b") {
+      if (this.row2.get(parseInt(column)) !== " ") {
+        console.log(warningMessage);
+        return true;
+      }
+    } else if (row === "c") {
+      if (this.row3.get(parseInt(column)) !== " ") {
+        console.log(warningMessage);
+        return true;
+      }
     }
   }
 }
