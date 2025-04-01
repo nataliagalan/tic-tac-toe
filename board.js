@@ -22,6 +22,56 @@ export class Board {
     this.row3 = row3Data;
   }
 
+  // ### inputs:
+  // - current player's symbol
+  // - current player's type
+  // ### process:
+  // - choose a random letter between a, b, or c
+  // 	- set `row` to the value chosen
+  // - choose a random number between 1, 2, or 3
+  // 	- set `column` to the value chosen
+
+  // - run `this.checkIfSpotIsTaken(row, column);`
+  // 	- update this ^ to not print the warning message that we print for humans if player.type is "computer"
+  // - if the spot is taken, choose something else until an available spot is chosen
+
+  // ### output:
+  // - an available spot is chosen
+  // - the board row values are updated in memory
+  // - and the board is ready to be re-printed
+
+  chooseRandomSpot(playerSymbol, playerType) {
+    const abcArray = ["a", "b", "c"];
+    const randomRow = abcArray[Math.floor(Math.random() * abcArray.length)];
+
+    const columnArray = [1, 2, 3];
+    const randomColumn =
+      columnArray[Math.floor(Math.random() * columnArray.length)];
+  }
+
+  checkIfSpotIsTaken(row, column) {
+    const warningMessage = `${chalk.red(
+      "\n📌 Spot is taken, please choose another spot 📌"
+    )}`;
+
+    if (row === "a") {
+      if (this.row1.get(parseInt(column)) !== " ") {
+        console.log(warningMessage);
+        return true;
+      }
+    } else if (row === "b") {
+      if (this.row2.get(parseInt(column)) !== " ") {
+        console.log(warningMessage);
+        return true;
+      }
+    } else if (row === "c") {
+      if (this.row3.get(parseInt(column)) !== " ") {
+        console.log(warningMessage);
+        return true;
+      }
+    }
+  }
+
   checkForTieOrWin(currentPlayer) {
     const winningMessage = `${chalk.yellow.inverse(
       `\n🥳 Player: ${currentPlayer} wins! 🥳`
@@ -158,29 +208,6 @@ export class Board {
       this.row2.set(parseInt(column), playerSymbol);
     } else if (row === "c") {
       this.row3.set(parseInt(column), playerSymbol);
-    }
-  }
-
-  checkIfSpotIsTaken(row, column) {
-    const warningMessage = `${chalk.red(
-      "\n📌 Spot is taken, please choose another spot 📌"
-    )}`;
-
-    if (row === "a") {
-      if (this.row1.get(parseInt(column)) !== " ") {
-        console.log(warningMessage);
-        return true;
-      }
-    } else if (row === "b") {
-      if (this.row2.get(parseInt(column)) !== " ") {
-        console.log(warningMessage);
-        return true;
-      }
-    } else if (row === "c") {
-      if (this.row3.get(parseInt(column)) !== " ") {
-        console.log(warningMessage);
-        return true;
-      }
     }
   }
 }
